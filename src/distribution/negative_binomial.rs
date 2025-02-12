@@ -490,6 +490,7 @@ mod tests {
 
     #[test]
     fn test_sample() {
+        use crate::prec;
         use rand::{distributions::Distribution, SeedableRng, rngs::StdRng};
 
         let dist = NegativeBinomial::new(4.0, 0.5).unwrap();
@@ -504,7 +505,7 @@ mod tests {
         let theoretical_mean = dist.mean().unwrap();
         let theoretical_variance = dist.variance().unwrap();
 
-        assert!((sample_mean - theoretical_mean).abs() < tol);
-        assert!((sample_variance - theoretical_variance).abs() < tol);
+        assert!(prec::almost_eq(sample_mean, theoretical_mean, tol));
+        assert!(prec::almost_eq(sample_variance, theoretical_variance, tol));
     }
 }
